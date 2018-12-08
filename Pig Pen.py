@@ -14,129 +14,143 @@ DiagonalDots = ["w","x","y","z"]
 
 fontSize = 0.5
 
-def InitialiseTurtle(t):
-    t.speed(0)
-    t.hideturtle()
-    t.pensize(3)
-    t.color('black')
+OUTFILE = 'pigpen.ps'
 
-def PenGoto(loc,t):
-    t.penup()
-    t.goto(loc)
-    t.pendown()
+class PigPenEncoder():
+    def __init__(self, outfile=OUTFILE):
+        self.outfile = OUTFILE
+        self.draw = Turtle()
+        self.InitialiseTurtle(self.draw)
 
-def Left(locx,locy,t):
-    PenGoto((locx,locy),t)
-    t.setheading(90)
-    t.forward(40*fontSize)
+    def InitialiseTurtle(self, t):
+        t.speed(0)
+        t.hideturtle()
+        t.pensize(3)
+        t.color('black')
 
-def Right(locx,locy,t):
-    PenGoto((locx+40*fontSize,locy),t)
-    t.setheading(90)
-    t.forward(40*fontSize)
+    def PenGoto(self, loc, t):
+        t.penup()
+        t.goto(loc)
+        t.pendown()
 
-def Bottom(locx,locy,t):
-    PenGoto((locx,locy),t)
-    t.setheading(0)
-    t.forward(40*fontSize)
+    def Left(self, locx,locy,t):
+        self.PenGoto((locx,locy),t)
+        t.setheading(90)
+        t.forward(40*fontSize)
 
-def Top(locx,locy,t):
-    PenGoto((locx,locy+40*fontSize),t)
-    t.setheading(0)
-    t.forward(40*fontSize)
+    def Right(self, locx,locy,t):
+        self.PenGoto((locx+40*fontSize,locy),t)
+        t.setheading(90)
+        t.forward(40*fontSize)
 
-def LeftD(locx,locy,t):
-    PenGoto((locx,locy+20*fontSize),t)
-    t.setheading(90-63.43)
-    t.forward(44.72*fontSize)
-    PenGoto((locx,locy+20*fontSize),t)
-    t.setheading(-90+63.43)
-    t.forward(44.72*fontSize)
+    def Bottom(self, locx,locy,t):
+        self.PenGoto((locx,locy),t)
+        t.setheading(0)
+        t.forward(40*fontSize)
 
-def RightD(locx,locy,t):
-    PenGoto((locx+40*fontSize,locy+20*fontSize),t)
-    t.setheading(90+63.43)
-    t.forward(44.72*fontSize)
-    PenGoto((locx+40*fontSize,locy+20*fontSize),t)
-    t.setheading(-90-63.43)
-    t.forward(44.72*fontSize)
+    def Top(self, locx,locy,t):
+        self.PenGoto((locx,locy+40*fontSize),t)
+        t.setheading(0)
+        t.forward(40*fontSize)
 
-def BottomD(locx,locy,t):
-    PenGoto((locx+20*fontSize,locy),t)
-    t.setheading(63.43)
-    t.forward(44.72*fontSize)
-    PenGoto((locx+20*fontSize,locy),t)
-    t.setheading(116.57)
-    t.forward(44.72*fontSize)
+    def LeftD(self, locx,locy,t):
+        self.PenGoto((locx,locy+20*fontSize),t)
+        t.setheading(90-63.43)
+        t.forward(44.72*fontSize)
+        self.PenGoto((locx,locy+20*fontSize),t)
+        t.setheading(-90+63.43)
+        t.forward(44.72*fontSize)
 
-def TopD(locx,locy,t):
-    PenGoto((locx+20*fontSize,locy+40*fontSize),t)
-    t.setheading(-63.43)
-    t.forward(44.72*fontSize)
-    PenGoto((locx+20*fontSize,locy+40*fontSize),t)
-    t.setheading(180+63.43)
-    t.forward(44.72*fontSize)
+    def RightD(self, locx,locy,t):
+        self.PenGoto((locx+40*fontSize,locy+20*fontSize),t)
+        t.setheading(90+63.43)
+        t.forward(44.72*fontSize)
+        self.PenGoto((locx+40*fontSize,locy+20*fontSize),t)
+        t.setheading(-90-63.43)
+        t.forward(44.72*fontSize)
 
-def Square(mode,locx,locy):
-    if "left" in mode:
-        Left(locx,locy,draw)
-    if "right" in mode:
-        Right(locx,locy,draw)
-    if "bottom" in mode:
-        Bottom(locx,locy,draw)
-    if "top" in mode:
-        Top(locx,locy,draw)
-    if "deft" in mode:
-        LeftD(locx,locy,draw)
-    if "dot" in mode:
-        BottomD(locx,locy,draw)
-    if "dop" in mode:
-        TopD(locx,locy,draw)
-    if "dight" in mode:
-        RightD(locx,locy,draw)
+    def BottomD(self, locx,locy,t):
+        self.PenGoto((locx+20*fontSize,locy),t)
+        t.setheading(63.43)
+        t.forward(44.72*fontSize)
+        self.PenGoto((locx+20*fontSize,locy),t)
+        t.setheading(116.57)
+        t.forward(44.72*fontSize)
 
-def Circle(locx,locy,t):
-    temp = t.pensize()
-    PenGoto((locx+20*fontSize,locy+20*fontSize),draw)
-    draw.pensize(10*fontSize)
-    draw.forward(0.01)
-    draw.pensize(temp)
+    def TopD(self, locx,locy,t):
+        self.PenGoto((locx+20*fontSize,locy+40*fontSize),t)
+        t.setheading(-63.43)
+        t.forward(44.72*fontSize)
+        self.PenGoto((locx+20*fontSize,locy+40*fontSize),t)
+        t.setheading(180+63.43)
+        t.forward(44.72*fontSize)
 
-draw = Turtle()
-InitialiseTurtle(draw)
+    def Square(self, mode,locx,locy):
+        if "left" in mode:
+            self.Left(locx,locy, self.draw)
+        if "right" in mode:
+            self.Right(locx,locy, self.draw)
+        if "bottom" in mode:
+            self.Bottom(locx,locy, self.draw)
+        if "top" in mode:
+            self.Top(locx,locy, self.draw)
+        if "deft" in mode:
+            self.LeftD(locx,locy, self.draw)
+        if "dot" in mode:
+            self.BottomD(locx,locy, self.draw)
+        if "dop" in mode:
+            self.TopD(locx,locy, self.draw)
+        if "dight" in mode:
+            self.RightD(locx,locy, self.draw)
 
-x = -300
-y = 250
+    def Circle(self, locx,locy,t):
+        temp = t.pensize()
+        self.PenGoto((locx+20*fontSize,locy+20*fontSize), self.draw)
+        self.draw.pensize(10*fontSize)
+        self.draw.forward(0.01)
+        self.draw.pensize(temp)
 
-PlainText = input("Enter the message to be displayed: ")
-for i in PlainText:
-    try:
-        i = i.lower()
-    except:
-        None
-    mode = ""
-    if i in WithDots:
-        Circle(x,y,draw)
-    if i in Lefts:
-        mode+="left"
-    if i in Rights:
-        mode+="right"
-    if i in Bottoms:
-        mode+="bottom"
-    if i in Tops:
-        mode+="top"
-    if i in ["s","w"]:
-        mode+="dot"
-    if i in ["v","z"]:
-        mode+="dop"
-    if i in ["t","x"]:
-        mode+="dight"
-    if i in ["u","y"]:
-        mode+="deft"
-    Square(mode,x,y)
-
-    x += 50*fontSize
-    if x >= 300:
+    def main(self, string_to_encode):
         x = -300
-        y -= 60*fontSize
+        y = 250
 
+        for i in string_to_encode:
+            try:
+                i = i.lower()
+            except:
+                None
+            mode = ""
+            if i in WithDots:
+                self.Circle(x,y,self.draw)
+            if i in Lefts:
+                mode+="left"
+            if i in Rights:
+                mode+="right"
+            if i in Bottoms:
+                mode+="bottom"
+            if i in Tops:
+                mode+="top"
+            if i in ["s","w"]:
+                mode+="dot"
+            if i in ["v","z"]:
+                mode+="dop"
+            if i in ["t","x"]:
+                mode+="dight"
+            if i in ["u","y"]:
+                mode+="deft"
+            self.Square(mode,x,y)
+
+            x += 50*fontSize
+            if x >= 300:
+                x = -300
+                y -= 60*fontSize
+
+        # save to postscript file
+        ts = self.draw.getscreen()
+        cv = ts.getcanvas()
+        cv.postscript(file=self.outfile, colormode='color')
+
+if __name__ == '__main__':
+    msg = input("Enter the message to be displayed: ")
+    p = PigPenEncoder()
+    p.main(msg)
