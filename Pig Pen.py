@@ -1,4 +1,4 @@
-#Pig Pen Writer
+# Pig Pen Writer
 from turtle import Turtle
 import turtle
 
@@ -17,8 +17,9 @@ fontSize = 0.5
 OUTFILE = 'pigpen.ps'
 
 class PigPenEncoder():
-    def __init__(self, outfile=OUTFILE):
-        self.outfile = OUTFILE
+    def __init__(self, save_file=False, outfile=OUTFILE):
+        self.save_file = save_file
+        self.outfile = outfile
         self.draw = Turtle()
         self.InitialiseTurtle(self.draw)
 
@@ -145,12 +146,15 @@ class PigPenEncoder():
                 x = -300
                 y -= 60*fontSize
 
-        # save to postscript file
-        ts = self.draw.getscreen()
-        cv = ts.getcanvas()
-        cv.postscript(file=self.outfile, colormode='color')
+        if self.save_file:
+            # save to postscript file
+            ts = self.draw.getscreen()
+            cv = ts.getcanvas()
+            cv.postscript(file=self.outfile, colormode='color')
 
 if __name__ == '__main__':
+    import time
     msg = input("Enter the message to be displayed: ")
-    p = PigPenEncoder()
+    p = PigPenEncoder(save_file=True)
     p.main(msg)
+    time.sleep(5)
